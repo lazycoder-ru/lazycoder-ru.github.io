@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Старый добрый SysRq - lazycoder.ru</title>
+      <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://lazycoder.ru/theme/css/lazystrap.css" rel="stylesheet">
+    <link href="http://lazycoder.ru/theme/css/pygments.css" rel="stylesheet">
+    <link href="http://lazycoder.ru/theme/css/lightbox.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://lazycoder.ru/theme/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="http://lazycoder.ru/theme/favicon.png" type="image/x-icon" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <meta name="description" content="записки ленивого кодера" />
+    <link href="http://lazycoder.ru/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="lazycoder.ru Full RSS Feed" />
+
+    <meta name="keywords" content="программирование, linux, технологии,linux,SysRq,x.org" />
+</head>
+<body onload="set_years(2008)">
+	<a href="https://github.com/lazycoder-ru" target="blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <div class="page">
+      <div class="header">
+        <a href="http://lazycoder.ru">
+          <img src="http://lazycoder.ru/theme/img/logo.png" alt="lazycoder.ru" />
+        </a>
+        <div class="navbar-desc">
+          записки ленивого кодера
+        </div>
+      </div>
+      <div class="container">
+          <div class="post-date pull-right">09.06.2009</div>
+          <h2 class="post-header">Старый добрый SysRq</h2>
+          <div class="post-metadata pull-right">
+            <a href="http://lazycoder.ru/tag/linux"><b>#</b>linux</a>
+            <a href="http://lazycoder.ru/tag/sysrq"><b>#</b>SysRq</a>
+            <a href="http://lazycoder.ru/tag/xorg"><b>#</b>x.org</a>
+          </div>
+          <div class="post-content">
+            <p>Не обойдет стороной и мой ленивый блог запись об этой чудесной
+клавише. Кто не в теме: клавиша имеет второе название PrtSc (держу пари
+вы ей не раз пользовались для снятия скринов с экрана) и предназначена
+она для экстренного выключения/перезагрузки компьютера. Клавиша и
+комбинации с ней слушаются непосредственно ядром поэтому даже в случае
+падения иксов можно без труда перезагрузить машину.</p>
+<p>Я не буду описывать как включить поддержку SysRq в ядре, так как моя
+любимая убунта поддерживает ее из коробки. Итак, начнем.</p>
+<p>Для выполнения необходимых действий используется следующая комбинация
+клавиш: + &lt;клавиша&gt;. Во многих источниках для безопасной перезагрузки
+советуют набрать клавиши reisub. Их и опишем:</p>
+<ul class="simple">
+<li>r - переключает клавиатуру из режима скан-кодов и устанавливает в
+ASCII режим (для перехвата клавиатуры у иксов)</li>
+<li>e - посылает сигнал SIGTERM (завершить) всем процессам кроме init.</li>
+<li>i - посылает сигнал SIGKILL(убить) всем процессам кроме init.</li>
+<li>s - сбрасывает содержимое буферов на диск.</li>
+<li>u - попытка отмонтировать корневую файловую систему&nbsp; и
+перемонтировать её в режиме <em>только-для-чтения.</em></li>
+<li>b - перезагрузка.</li>
+</ul>
+<p>Существует еще несколько управляющих клавиш для комбинации с SysRq, а
+именно:</p>
+<ul class="simple">
+<li>l - посылает сигнал SIGKILL всем процессам, включая init;</li>
+<li>0-9 - устанавливает указанный уровень вывода отладочной информации
+для консоли;</li>
+<li>t - отображает информацию о запущенных задачах;</li>
+<li>m - отображает информацию о памяти;</li>
+<li>p - печатает содержимое регистров процессора;</li>
+<li>k - клавиша безопасного доступа. Она убивает все процессы, запущенные
+на текущей виртуальной консоли, так, чтобы никакая излишне любопытная
+программа не могла захватить ваши нажатия клавиш.</li>
+</ul>
+<p>Скажу честно, у самого пока не представилось случая проверить эти
+магические комбинации, так что... =)</p>
+
+          </div>
+          <div class="post-comments">
+            <h4>Комментарии</h4>
+<!-- place code of your favour comment system here -->
+<div id="hypercomments_widget"></div>
+<script type="text/javascript">
+_hcwp = window._hcwp || [];
+_hcwp.push({widget:"Stream", widget_id: 20774 });
+(function() {
+if("HC_LOAD_INIT" in window)return;
+HC_LOAD_INIT = true;
+var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/20774/"+lang+"/widget.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hcc, s.nextSibling);
+})();
+</script>          </div>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="container">
+        <div class="footer">
+            <a href="http://lazycoder.ru/about">О блоге</a>
+          <a href="http://lazycoder.ru/archives">Архив</a>
+          <a href="http://lazycoder.ru/feeds/rss.xml">RSS</a>
+  
+          <a href="http://twitter.com/mortis_ht">twitter</a>
+        </div>
+        <div class="footer">
+          <span id="years">2008-2014</span> &copy; записки ленивого кодера | Powered by <a href="http://getpelican.com">Pelican</a>| <a href="http://creativecommons.org/licenses/by/4.0/">CC BY</a>
+        </div>
+      </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+    <script src="http://lazycoder.ru/theme/js/lightbox-2.6.min.js"></script>
+    <script src="http://lazycoder.ru/theme/js/lazystrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Простой downloader на python - lazycoder.ru</title>
+      <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://lazycoder.ru/theme/css/lazystrap.css" rel="stylesheet">
+    <link href="http://lazycoder.ru/theme/css/pygments.css" rel="stylesheet">
+    <link href="http://lazycoder.ru/theme/css/lightbox.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://lazycoder.ru/theme/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="http://lazycoder.ru/theme/favicon.png" type="image/x-icon" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <meta name="description" content="записки ленивого кодера" />
+    <link href="http://lazycoder.ru/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="lazycoder.ru Full RSS Feed" />
+
+    <meta name="keywords" content="программирование, linux, технологии,download,manager,myworks,python" />
+</head>
+<body onload="set_years(2008)">
+	<a href="https://github.com/lazycoder-ru" target="blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <div class="page">
+      <div class="header">
+        <a href="http://lazycoder.ru">
+          <img src="http://lazycoder.ru/theme/img/logo.png" alt="lazycoder.ru" />
+        </a>
+        <div class="navbar-desc">
+          записки ленивого кодера
+        </div>
+      </div>
+      <div class="container">
+          <div class="post-date pull-right">29.12.2010</div>
+          <h2 class="post-header">Простой downloader на python</h2>
+          <div class="post-metadata pull-right">
+            <a href="http://lazycoder.ru/tag/download"><b>#</b>download</a>
+            <a href="http://lazycoder.ru/tag/manager"><b>#</b>manager</a>
+            <a href="http://lazycoder.ru/tag/myworks"><b>#</b>myworks</a>
+            <a href="http://lazycoder.ru/tag/python"><b>#</b>python</a>
+          </div>
+          <div class="post-content">
+            <p>Не найдя в сети ни одного примера загрузчика файлов с отображением
+текущего статуса загрузки и возможностью докачки решил написать свой.
+Быть может кому пригодится.</p>
+<table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre> 1
+ 2
+ 3
+ 4
+ 5
+ 6
+ 7
+ 8
+ 9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84</pre></div></td><td class="code"><div class="highlight"><pre><span class="c"># -*- coding: utf-8 -*-</span>
+
+<span class="kn">import</span> <span class="nn">os</span><span class="o">,</span><span class="nn">sys</span><span class="o">,</span><span class="nn">urllib2</span>
+
+<span class="k">def</span> <span class="nf">getNewPath</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="n">directory</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">directory</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span> <span class="n">directory</span><span class="o">=</span><span class="n">os</span><span class="o">.</span><span class="n">curdir</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">directory</span><span class="p">):</span> <span class="n">os</span><span class="o">.</span><span class="n">mkdir</span><span class="p">(</span><span class="n">directory</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">name</span><span class="o">==</span><span class="bp">None</span><span class="p">:</span>
+        <span class="n">path</span><span class="o">=</span><span class="s">&quot;</span><span class="si">%s%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">directory</span><span class="p">,</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span>
+            <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s">&quot;/&quot;</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">])</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">path</span><span class="o">=</span><span class="s">&quot;</span><span class="si">%s%s%s</span><span class="s">&quot;</span> <span class="o">%</span> <span class="p">(</span>
+            <span class="n">directory</span><span class="p">,</span>
+            <span class="n">os</span><span class="o">.</span><span class="n">sep</span><span class="p">,</span>
+            <span class="n">name</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">path</span>
+
+<span class="k">def</span> <span class="nf">downloadfile</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">newName</span><span class="o">=</span><span class="bp">None</span><span class="p">,</span> <span class="nb">dir</span><span class="o">=</span><span class="bp">None</span><span class="p">):</span>
+    <span class="n">newPath</span> <span class="o">=</span> <span class="n">getNewPath</span><span class="p">(</span><span class="n">url</span><span class="p">,</span> <span class="n">newName</span><span class="p">,</span> <span class="nb">dir</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">newPath</span><span class="p">):</span>
+        <span class="n">localLen</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">localLen</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">getsize</span><span class="p">(</span><span class="n">newPath</span><span class="p">)</span>
+
+    <span class="n">req</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">Request</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="n">req</span><span class="o">.</span><span class="n">headers</span><span class="p">[</span><span class="s">&#39;Range&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="s">&#39;bytes=&#39;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">localLen</span><span class="p">)</span><span class="o">+</span><span class="s">&#39;-&#39;</span>
+
+    <span class="k">print</span> <span class="s">&quot;Sending request...&quot;</span>
+    <span class="n">remoteLen</span> <span class="o">=</span> <span class="mi">0</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">res</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+        <span class="n">remoteLen</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">res</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="s">&quot;Content-Length&quot;</span><span class="p">))</span>
+    <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">e</span>
+        <span class="k">return</span>
+    <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">URLError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">e</span>
+        <span class="k">return</span>
+
+    <span class="k">print</span> <span class="s">&quot;Received code:&quot;</span><span class="p">,</span> <span class="n">res</span><span class="o">.</span><span class="n">getcode</span><span class="p">()</span>
+
+    <span class="k">print</span> <span class="s">&quot;Length: </span><span class="si">%d</span><span class="s"> (</span><span class="si">%.02f</span><span class="s">M) [</span><span class="si">%s</span><span class="s">]&quot;</span> <span class="o">%</span> <span class="p">(</span>
+        <span class="n">remoteLen</span><span class="p">,</span>
+        <span class="n">remoteLen</span><span class="o">/</span><span class="mf">1024.0</span><span class="o">/</span><span class="mf">1024.0</span><span class="p">,</span>
+        <span class="n">res</span><span class="o">.</span><span class="n">info</span><span class="p">()</span><span class="o">.</span><span class="n">getheader</span><span class="p">(</span><span class="s">&quot;Content-Type&quot;</span><span class="p">))</span>
+
+    <span class="k">print</span> <span class="s">&quot;Saving to: &quot;</span><span class="p">,</span> <span class="n">newPath</span>
+
+    <span class="k">if</span> <span class="n">localLen</span> <span class="o">==</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">localFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">newPath</span><span class="p">,</span> <span class="s">&quot;wb&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">localLen</span> <span class="o">&lt;</span> <span class="n">remoteLen</span><span class="p">:</span>
+        <span class="n">localFile</span> <span class="o">=</span> <span class="nb">open</span><span class="p">(</span><span class="n">newPath</span><span class="p">,</span> <span class="s">&quot;ab&quot;</span><span class="p">)</span>
+    <span class="k">elif</span> <span class="n">localLen</span> <span class="o">==</span> <span class="n">remoteLen</span><span class="p">:</span>
+        <span class="k">print</span> <span class="s">&quot;File has downloaded already.&quot;</span>
+        <span class="k">return</span>
+
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">remoteFile</span> <span class="o">=</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">urlopen</span><span class="p">(</span><span class="n">req</span><span class="p">)</span>
+    <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">e</span>
+        <span class="k">return</span>
+    <span class="k">except</span> <span class="n">urllib2</span><span class="o">.</span><span class="n">URLError</span><span class="p">,</span> <span class="n">e</span><span class="p">:</span>
+        <span class="k">print</span> <span class="n">e</span>
+        <span class="k">return</span>
+
+    <span class="k">print</span> <span class="s">&quot;Downloading </span><span class="si">%s</span><span class="s"> - </span><span class="si">%s</span><span class="s"> (</span><span class="si">%s</span><span class="s"> bytes) ...&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">remoteFile</span><span class="o">.</span><span class="n">url</span><span class="p">,</span> <span class="n">newPath</span><span class="p">,</span> <span class="n">remoteLen</span><span class="p">)</span>
+    <span class="k">if</span> <span class="n">remoteLen</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">:</span>
+        <span class="n">remoteLen</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">remoteLen</span><span class="p">)</span>
+        <span class="n">bytesRead</span> <span class="o">=</span> <span class="nb">float</span><span class="p">(</span><span class="n">localLen</span><span class="p">)</span>
+        <span class="k">for</span> <span class="n">line</span> <span class="ow">in</span> <span class="n">remoteFile</span><span class="p">:</span>
+            <span class="n">bytesRead</span> <span class="o">+=</span> <span class="nb">len</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="s">&quot;</span><span class="se">\r</span><span class="si">%s</span><span class="s">: </span><span class="si">%.02f</span><span class="s">/</span><span class="si">%.02f</span><span class="s"> kb (</span><span class="si">%d%%</span><span class="s">)&quot;</span> <span class="o">%</span> <span class="p">(</span>
+                <span class="n">newPath</span><span class="p">,</span>
+                <span class="n">bytesRead</span><span class="o">/</span><span class="mf">1024.0</span><span class="p">,</span>
+                <span class="n">remoteLen</span><span class="o">/</span><span class="mf">1024.0</span><span class="p">,</span>
+                <span class="mi">100</span><span class="o">*</span><span class="n">bytesRead</span><span class="o">/</span><span class="n">remoteLen</span><span class="p">))</span>
+            <span class="n">sys</span><span class="o">.</span><span class="n">stdout</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
+            <span class="n">localFile</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">line</span><span class="p">)</span>
+    <span class="n">remoteFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="n">localFile</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
+    <span class="k">print</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">File </span><span class="si">%s</span><span class="s"> has been downloaded.</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">%</span> <span class="n">newPath</span>
+</pre></div>
+</td></tr></table><div class="line-block">
+<div class="line">P.S. Работает на честном слове :-)</div>
+<div class="line">Репозиторий проекта на
+<a class="reference external" href="https://github.com/lazycoder-ru/pyfileget">github.com</a></div>
+</div>
+
+          </div>
+          <div class="post-comments">
+            <h4>Комментарии</h4>
+<!-- place code of your favour comment system here -->
+<div id="hypercomments_widget"></div>
+<script type="text/javascript">
+_hcwp = window._hcwp || [];
+_hcwp.push({widget:"Stream", widget_id: 20774 });
+(function() {
+if("HC_LOAD_INIT" in window)return;
+HC_LOAD_INIT = true;
+var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/20774/"+lang+"/widget.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hcc, s.nextSibling);
+})();
+</script>          </div>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="container">
+        <div class="footer">
+            <a href="http://lazycoder.ru/about">О блоге</a>
+          <a href="http://lazycoder.ru/archives">Архив</a>
+          <a href="http://lazycoder.ru/feeds/rss.xml">RSS</a>
+  
+          <a href="http://twitter.com/mortis_ht">twitter</a>
+        </div>
+        <div class="footer">
+          <span id="years">2008-2014</span> &copy; записки ленивого кодера | Powered by <a href="http://getpelican.com">Pelican</a>| <a href="http://creativecommons.org/licenses/by/4.0/">CC BY</a>
+        </div>
+      </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+    <script src="http://lazycoder.ru/theme/js/lightbox-2.6.min.js"></script>
+    <script src="http://lazycoder.ru/theme/js/lazystrap.js"></script>
+</body>
+</html>

@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <title>Jabber и ICQ: в чем сила, брат? - lazycoder.ru</title>
+      <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="http://lazycoder.ru/theme/css/lazystrap.css" rel="stylesheet">
+    <link href="http://lazycoder.ru/theme/css/pygments.css" rel="stylesheet">
+    <link href="http://lazycoder.ru/theme/css/lightbox.css" rel="stylesheet">
+    <link rel="shortcut icon" href="http://lazycoder.ru/theme/favicon.png" type="image/x-icon" />
+    <link rel="icon" href="http://lazycoder.ru/theme/favicon.png" type="image/x-icon" />
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <meta name="description" content="записки ленивого кодера" />
+    <link href="http://lazycoder.ru/feeds/rss.xml" type="application/rss+xml" rel="alternate" title="lazycoder.ru Full RSS Feed" />
+
+    <meta name="keywords" content="программирование, linux, технологии,icq,jabber,open source,протокол,сеть" />
+</head>
+<body onload="set_years(2008)">
+	<a href="https://github.com/lazycoder-ru" target="blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+    <div class="page">
+      <div class="header">
+        <a href="http://lazycoder.ru">
+          <img src="http://lazycoder.ru/theme/img/logo.png" alt="lazycoder.ru" />
+        </a>
+        <div class="navbar-desc">
+          записки ленивого кодера
+        </div>
+      </div>
+      <div class="container">
+          <div class="post-date pull-right">21.09.2008</div>
+          <h2 class="post-header">Jabber и ICQ: в чем сила, брат?</h2>
+          <div class="post-metadata pull-right">
+            <a href="http://lazycoder.ru/tag/icq"><b>#</b>icq</a>
+            <a href="http://lazycoder.ru/tag/jabber"><b>#</b>jabber</a>
+            <a href="http://lazycoder.ru/tag/open-source"><b>#</b>open source</a>
+            <a href="http://lazycoder.ru/tag/protokol"><b>#</b>протокол</a>
+            <a href="http://lazycoder.ru/tag/set"><b>#</b>сеть</a>
+          </div>
+          <div class="post-content">
+            <p>В этой статье я постараюсь рассказать о том, что такое Jabber, его
+основных отличиях, а также о его преимуществах и недостатках по
+отношению к другим протоколам обмена мгновенными сообщениями, в
+частности к ICQ. Данная статья в первую очередь ориентирована на людей
+только решивших перейти на сей протокол, а также для тех кто даже ничего
+не слышал о Jabber.</p>
+<div class="section" id="jabber">
+<h2>Что такое Jabber?</h2>
+<p>Jabber(Джаббер) - это &nbsp;абсолютно открытая некоммерческая система
+быстрого обмена сообщениями на основе протокола XMPP использующее
+децентрализованную топологию серверов. Лого джаббера - <a class="reference external" href="http://www.mortis.tu2.ru/wp-content/uploads/2008/09/x_7f904dd8.jpg">лампа
+накаливания</a>.
+Семейство протоколов Jabber принято как стандарт RFC.</p>
+</div>
+<div class="section" id="id1">
+<h2>Основные понятия в Jabber</h2>
+<ul class="simple">
+<li><strong>Jabber ID (JID)</strong>- аналог вашего номера в icq(uin), за тем лишь
+исключением, что в jabber'е используются не номера(цифры), а адреса
+подобно адресам электронной почты. Например <a class="reference external" href="mailto:d-mortis&#64;jabber.ru">d-mortis&#64;jabber.ru</a></li>
+<li><strong>Ростер(Roster)</strong> - аналог контакт-листа в icq. Хранится на сервере.</li>
+<li><strong>Транспорт</strong> - сервис на джаббер-сервере предоставляющий доступ в
+другие IM сети.</li>
+<li><strong>Конференция</strong> - чат на одном из jabber-серверов. Каждая конференция
+также имеет свой адрес, чаще всего он состоит из собственно имени
+конференции, службы, и собственно сервера. Например,
+<a class="reference external" href="mailto:linux&#64;conference.jabber.ru">linux&#64;conference.jabber.ru</a>, здесь linux - название конференции,
+conference - имя службы, предоставляющей возможность общения в чатах,
+и собственно сам сервер.</li>
+<li><strong>Закладки</strong> - подобно закладкам в любом браузере, однако в джаббере
+используются для хранения адресов конференций, транспортов и URL.</li>
+<li><strong>Персональная карта(Personal vCard)</strong> - опять же аналог вашей личной
+информации в icq.</li>
+<li><strong>Сервис</strong> - служба сервера позволяющая: вести общение с другими IM
+сетями(icq, Майл.Ру, aim и т.д.), создавать и общаться в
+чат-комнатах, получать рассылки и многое другое. Количество и список
+служб зависит от конкретного сервера. Подключившись к одному серверу
+вы вполне можете использовать службы другого.</li>
+<li><strong>Ресурс</strong> - дополнительное значение адреса, которое может
+идентифицировать пользователя в данный момент. Чтобы подключить
+ресурс достаточно в конце jid поставить &quot;/&quot;(слэш) и далее имя
+ресурса, то есть у вас получится нечто такое <a class="reference external" href="mailto:user&#64;server.ru/home">user&#64;server.ru/home</a>.
+Сообщения отправленные на <a class="reference external" href="mailto:user&#64;server.ru">user&#64;server.ru</a> получат все подключенные
+ресурсы, однако сообщение посланное непосредственно на
+<a class="reference external" href="mailto:user&#64;server.ru/home">user&#64;server.ru/home</a> дойдут только при включенном ресурсе /home.</li>
+</ul>
+</div>
+<div class="section" id="id2">
+<h2>Преимущества Jabber над icq</h2>
+<ul class="simple">
+<li>В отличие от коммерческих сетей, таких как icq, протокол Jabber
+открыт и общедоступен. Благодаря этому существует множество
+библиотек, клиентов и серверов с открытым исходным кодом.</li>
+<li>Отсутсвие спама. Протокол XMPP предполагает общение контактов друг с
+другом только после обоюдного согласия обоих пользователей. То есть
+авторизация обязательна. Также препятствует спаму и
+децентрализованность сети.</li>
+<li>Возможность использования в домашней/корпоративной сети. Благодаря
+открытости технологии существует множество jabber-серверов, которые
+дают возможность полноценного использования всех преимуществ
+технологии Jabber в рамках корпоративной сети.</li>
+<li>С помощью ресурсов, имеется возможность одновременного подключения к
+одному джаббер-аккаунту.</li>
+<li>Отсутствие проблем с кодировками. Джаббер изначально поддерживет
+кодировку Unicode, которая позволяет обмениваться сообщениями
+практически на любом языке.</li>
+<li>Подключение к серверу проходит быстрее.</li>
+<li>Возможность подключения транспортов для общения с контактами из
+другой IM сети.</li>
+<li>Jid зачастую запомнить легче, чем номер icq.</li>
+</ul>
+</div>
+<div class="section" id="id3">
+<h2>Недостатки Jabber</h2>
+<ul class="simple">
+<li>Отсутствие поиска юзеров из-за децентрализованности сети.</li>
+<li>Отсутствие на некоторых серверах системы восстановления пароля. Да и
+то, только если в вашей карте был указан e-mail. Однако если у вас
+есть джаббер аккаунт на Livejournal.com , Gmail.com или на Я.ру
+соответственно пароли от почты(блога) одни и те же, следовательно,
+чтобы восстановить пароль от джаббера, достаточно восстановить пароль
+от вашей почты(блога).</li>
+<li>Немного больший трафик по сравнению с icq.</li>
+</ul>
+<p>Видно, что у джабера достоинств на порядок больше, однако есть и
+серьезный недостаток, который даже наверное и недостатком то назвать
+сложно. Я говорю о том, что в век популярности &quot;аськи&quot;, очень сложно
+&quot;переманить&quot; людей на другой IM, даже если он неоспоримо лучше. Думаю
+это связано прежде всего с тем, что Jabber изначально не имеет владеющей
+им корпорации, отсюда и слабая популярность его в массах, то есть не
+имея коммерческой направленности отсутствует и мотивация распространять
+и продвигать систему. Однако не имея одного хозяина джаббер может быть
+бесплатно использован кем угодно и практически как угодно. Думается, что
+жаба так и останется выбором энтузиастов и любителей открытых систем.</p>
+</div>
+
+          </div>
+          <div class="post-comments">
+            <h4>Комментарии</h4>
+<!-- place code of your favour comment system here -->
+<div id="hypercomments_widget"></div>
+<script type="text/javascript">
+_hcwp = window._hcwp || [];
+_hcwp.push({widget:"Stream", widget_id: 20774 });
+(function() {
+if("HC_LOAD_INIT" in window)return;
+HC_LOAD_INIT = true;
+var lang = (navigator.language || navigator.systemLanguage || navigator.userLanguage || "en").substr(0, 2).toLowerCase();
+var hcc = document.createElement("script"); hcc.type = "text/javascript"; hcc.async = true;
+hcc.src = ("https:" == document.location.protocol ? "https" : "http")+"://w.hypercomments.com/widget/hc/20774/"+lang+"/widget.js";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hcc, s.nextSibling);
+})();
+</script>          </div>
+      </div>
+    </div>
+    <footer class="footer-wrapper">
+      <div class="container">
+        <div class="footer">
+            <a href="http://lazycoder.ru/about">О блоге</a>
+          <a href="http://lazycoder.ru/archives">Архив</a>
+          <a href="http://lazycoder.ru/feeds/rss.xml">RSS</a>
+  
+          <a href="http://twitter.com/mortis_ht">twitter</a>
+        </div>
+        <div class="footer">
+          <span id="years">2008-2014</span> &copy; записки ленивого кодера | Powered by <a href="http://getpelican.com">Pelican</a>| <a href="http://creativecommons.org/licenses/by/4.0/">CC BY</a>
+        </div>
+      </div>
+    </footer>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script> 
+    <script src="http://lazycoder.ru/theme/js/lightbox-2.6.min.js"></script>
+    <script src="http://lazycoder.ru/theme/js/lazystrap.js"></script>
+</body>
+</html>
